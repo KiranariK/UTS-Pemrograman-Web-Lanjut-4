@@ -1,0 +1,10 @@
+erDiagram
+ USERS ||--o{ INCIDENTS : reports
+ ASSETS ||--o{ INCIDENTS : affects
+ INCIDENTS ||--o{ INCIDENT_UPDATES : has
+ INCIDENTS ||--o{ AUDIT_LOGS : records
+ USERS { int id PK string name string email UK string role datetime created_at }
+ ASSETS { int id PK string asset_name string asset_type string ip_address string owner string criticality datetime created_at }
+ INCIDENTS { int id PK string title text description string incident_type string severity string status string source_ip datetime reported_at int user_id FK int asset_id FK }
+ INCIDENT_UPDATES { int id PK int incident_id FK text note string new_status datetime created_at }
+ AUDIT_LOGS { int id PK int incident_id FK string action string actor text detail datetime created_at }
