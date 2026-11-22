@@ -18,7 +18,13 @@ def add_user():
     if not n or "@" not in e: return err("name dan email valid wajib diisi")
     if User.query.filter_by(email=e).first(): return err("Email sudah terdaftar","DUPLICATE_EMAIL",409)
     u=User(name=n.strip(),email=e,role=d.get("role","analyst")); db.session.add(u); db.session.commit()
-=True) or {}
+    return jsonify({"success":True,"data":{"id":u.id,"name":u.name,"email":u.email,"role":u.role}}),201
+@api.get("/users")
+def users():
+    return jsonify({"success":True,"data":[{"id":u.id,"name":u.name,"email":u.email,"role":u.role} for u in User.query.all()]})
+@api.post("/assets")
+def add_asset():
+    d=request.get_json(silent=True) or {}
     if not d.get("asset_name") or not d.get("asset_type"): return err("asset_name dan asset_type wajib diisi")
     c=d.get("criticality","medium")
     if c not in SEV: return err("criticality tidak valid")
