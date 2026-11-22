@@ -13,3 +13,4 @@ def seed():
         db.session.add_all([u,a]);db.session.flush()
         db.session.add(Incident(title="Percobaan login mencurigakan",description="Beberapa percobaan login gagal.",incident_type="brute_force",severity="high",user_id=u.id,asset_id=a.id,source_ip="198.51.100.25"))
         db.session.commit();print("Seed selesai.")
+if __name__=="__main__":app.run(debug=True)
